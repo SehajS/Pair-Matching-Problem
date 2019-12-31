@@ -62,6 +62,13 @@ def randomized_online(number):
     randomOnlineDecisions.append('A' if matching_pair else 'R')
     print("Randomized Online Output: {}" .format(randomOnlineDecisions))
 
+def wrong_decisions(list1):
+    diff_nums = 0
+    for i in range(numbers):
+        if list1[i] != numbers[i]:
+            diff_nums += 1
+    return diff_nums
+
 def main():
     while(True):
         inputNum = input("Enter a rational number between 0 and 1 (Press 'E' to exit): ")
@@ -72,9 +79,23 @@ def main():
         inputNum = parseInput(inputNum)
         if(inputNum is not None):
             numbers.append(inputNum)
-            print("Input Sequence so far: " + numbers)      
+            print("Input Sequence so far: ", numbers)      
             deterministic_online(inputNum) 
             randomized_online(inputNum)
+    # once 'E' is pressed, the problem becomes an offline problem
+    if(inputNum == 'E' and numbers != []):
+        offline(numbers)
+        wrong_det_decisions = wrong_decisions(onlineDecisions)
+        wrong_rand_decisions = wrong_decisions(randomOnlineDecisions)
+
+        print("\n ------------------------------------------")
+        print("Input sequence: {}".format(numbers))
+        print("Determinsitic Online Ouput: {}".format(onlineDecisions))
+        print("Randomized Online Output: {}".format(randomOnlineDecisions))
+        print("Offline Output: {}".format(offlineDecisions))
+        print("Total wrong decisions in deterministic case: {}".format(wrong_det_decisions))
+        print("Total wrong decisions in randomized case: {}".format(wrong_rand_decisions))
+        print("---------------------------------------------\n")
 
 main()
 
